@@ -22,7 +22,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static steps.UserClientSteps.checkRequestAuthLogin;
 
-public class OrderCreateTest extends Base1APITest {
+public class OrderCreateTest extends BaseOneAPITest {
 
 
     @Test
@@ -31,13 +31,13 @@ public class OrderCreateTest extends Base1APITest {
     public void createOrderWithAuthorizationTest() {
 
         Ingredients ingredientsResponse = OrderClientSteps.getIngredient();
-        ingredients.add(ingredientsResponse.getData().get(1).get_id());
-        ingredients.add(ingredientsResponse.getData().get(2).get_id());
-        ingredients.add(ingredientsResponse.getData().get(3).get_id());
-        ingredients.add(ingredientsResponse.getData().get(4).get_id());
-        ingredients.add(ingredientsResponse.getData().get(5).get_id());
-        ingredients.add(ingredientsResponse.getData().get(7).get_id());
-        ingredients.add(ingredientsResponse.getData().get(8).get_id());
+        ingredients.add(ingredientsResponse.getData().get(1).getId());
+        ingredients.add(ingredientsResponse.getData().get(2).getId());
+        ingredients.add(ingredientsResponse.getData().get(3).getId());
+        ingredients.add(ingredientsResponse.getData().get(4).getId());
+        ingredients.add(ingredientsResponse.getData().get(5).getId());
+        ingredients.add(ingredientsResponse.getData().get(7).getId());
+        ingredients.add(ingredientsResponse.getData().get(8).getId());
         Response response = OrderClientSteps.createOrderWithAuthorization(order, accessToken);
         response.then().
                 log().all()
@@ -46,7 +46,7 @@ public class OrderCreateTest extends Base1APITest {
                 .body("name", notNullValue())
                 .body("order.number", any(Integer.class))
                 .body("order.ingredients", notNullValue())
-                .body("order._id", notNullValue())
+                .body("order.id", notNullValue())
                 .body("order.owner.name", equalTo(name))
                 .body("order.owner.email", equalTo(email.toLowerCase(Locale.ROOT)))
                 .body("order.status", equalTo("done"))
@@ -60,9 +60,9 @@ public class OrderCreateTest extends Base1APITest {
     @Description("Успешное создание заказа без авторизации")
     public void createOrderWithoutAuthorizationTest() {
         Ingredients ingredientsResponse = OrderClientSteps.getIngredient();
-        ingredients.add(ingredientsResponse.getData().get(1).get_id());
-        ingredients.add(ingredientsResponse.getData().get(2).get_id());
-        ingredients.add(ingredientsResponse.getData().get(3).get_id());
+        ingredients.add(ingredientsResponse.getData().get(1).getId());
+        ingredients.add(ingredientsResponse.getData().get(2).getId());
+        ingredients.add(ingredientsResponse.getData().get(3).getId());
         Response response = OrderClientSteps.createOrderWithoutAuthorization(order);
         response.then()
                 .log().all()
@@ -79,7 +79,7 @@ public class OrderCreateTest extends Base1APITest {
         // Создаем пустой заказ
         Order emptyOrder = new Order(new ArrayList<>());
 
-        OrderClientSteps.checkFailedResponseApiOrders(emptyOrder)
+        OrderClientSteps.checkFailedResponseApiOrders(emptyOrder,accessToken)
                 .then()
                 .log().all()
                 .statusCode(400)
@@ -92,8 +92,8 @@ public class OrderCreateTest extends Base1APITest {
     @Description("Проверка создания заказа с авторизацией с неверным хешем ингредиентов")
     public void createOrderWithAuthorizationWithWrongHashTest() {
         Ingredients ingredientsResponse = OrderClientSteps.getIngredient();
-        ingredients.add(ingredientsResponse.getData().get(1).get_id() + "khilunjlknjkbyg444333");
-        ingredients.add(ingredientsResponse.getData().get(2).get_id() + "7889iuojuigtyfjkuhh");
+        ingredients.add(ingredientsResponse.getData().get(1).getId() + "khilunjlknjkbyg444333");
+        ingredients.add(ingredientsResponse.getData().get(2).getId() + "7889iuojuigtyfjkuhh");
         Response response = OrderClientSteps.createOrderWithAuthorization(order, accessToken);
         response.then().log().all()
                 .statusCode(500);
@@ -103,8 +103,8 @@ public class OrderCreateTest extends Base1APITest {
     @Description("Проверка создания заказа без авторизации с неверным хешем ингредиентов")
     public void createOrderWithoutAuthorizationWithWrongHashTest() {
         Ingredients ingredientsResponse = OrderClientSteps.getIngredient();
-        ingredients.add(ingredientsResponse.getData().get(1).get_id() + "khilunjlknjkbyg444333");
-        ingredients.add(ingredientsResponse.getData().get(2).get_id() + "7889iuojuigtyfjkuhh");
+        ingredients.add(ingredientsResponse.getData().get(1).getId() + "khilunjlknjkbyg444333");
+        ingredients.add(ingredientsResponse.getData().get(2).getId() + "7889iuojuigtyfjkuhh");
         Response response = OrderClientSteps.createOrderWithoutAuthorization(order);
         response.then().log().all()
                 .statusCode(500);

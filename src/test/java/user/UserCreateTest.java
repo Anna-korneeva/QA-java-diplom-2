@@ -3,7 +3,6 @@ package user;
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import model.User;
-import org.hamcrest.Condition;
 import org.junit.After;
 import org.junit.Test;
 import steps.UserClientSteps;

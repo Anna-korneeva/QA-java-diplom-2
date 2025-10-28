@@ -5,7 +5,6 @@ import model.Order;
 import model.User;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
-import steps.OrderClientSteps;
 import steps.UserClientSteps;
 
 import java.util.ArrayList;
@@ -13,7 +12,7 @@ import java.util.List;
 
 import static constants.TestData.BASE_URI;
 
-public class Base1APITest {
+public class BaseOneAPITest {
     protected String email;
     protected String password;
     protected String name;

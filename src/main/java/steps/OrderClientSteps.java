@@ -6,11 +6,9 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import model.Ingredients;
 import model.Order;
-import org.hamcrest.CoreMatchers;
-
 import static constants.TestData.ORDERS;
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.core.IsEqual.equalTo;
+
 
 public class OrderClientSteps {
 
@@ -47,11 +45,12 @@ public class OrderClientSteps {
     }
 
     @Step("Создание заказа без ингредиентов")
-    public static Response checkFailedResponseApiOrders (Order order) {
+    public static Response checkFailedResponseApiOrders (Order order, String token) {
         return given()
                 .log().all()
                 .filter(new AllureRestAssured())
                 .contentType(ContentType.JSON)
+                .header("authorization", token)
                 .body(order)
                 .when()
                 .post(ORDERS);
