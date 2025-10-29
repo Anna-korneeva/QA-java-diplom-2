@@ -12,7 +12,7 @@ import java.util.List;
 
 import static constants.TestData.BASE_URI;
 
-public class BaseOneAPITest {
+public class BaseOrderAPITest {
     protected String email;
     protected String password;
     protected String name;

@@ -22,7 +22,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static steps.UserClientSteps.checkRequestAuthLogin;
 
-public class OrderCreateTest extends BaseOneAPITest {
+public class OrderCreateTest extends BaseOrderAPITest {
 
 
     @Test
